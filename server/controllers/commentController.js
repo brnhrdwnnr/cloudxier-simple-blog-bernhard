@@ -33,7 +33,8 @@ class CommentController {
 	}
 	static async deleteComment(req, res, next) {
 		try {
-			const comment = await Comment.findByPk(req.params.id);
+			const { id } = req.params;
+			const comment = await Comment.findByPk(id);
             if (!comment) {
                 throw { name: "CommentNotFound" };
             } else {
