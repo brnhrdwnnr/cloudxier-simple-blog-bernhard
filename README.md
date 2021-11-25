@@ -1,6 +1,6 @@
 # cloudxier_simple_blog_bernhard
 
-# Developer Notes
+## Developer Notes
 
 1. Lakukan `npm install` untuk membuat folder node_modules
 2. Lakukan `npm run start` untuk mengaktifkan app.js

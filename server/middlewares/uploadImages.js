@@ -4,12 +4,10 @@ const axios = require("axios");
 const uploadImages = async (req, res, next) => {
 	try {
 		const file = req.file;
-		console.log(file, "FILE")
 		if (!file) {
 			next();
 		} else {
 			const parsedFile = file.buffer.toString("base64");
-			console.log(parsedFile, "PARSED FILE");
 			if (file.size > 255000) {
 				throw { name: "FileTooBig" };
 			}
@@ -26,7 +24,6 @@ const uploadImages = async (req, res, next) => {
 				headers: form.getHeaders(),
 				auth: { username: process.env.IMAGE_KIT_KEY },
 			});
-			console.log(response, "RESPONSE")
 			if (!response) {
 				throw { name: "FileUploadFailed" };
 			}

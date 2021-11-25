@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development npx nodemon app.js",
     "start": "npx nodemon app.js",
-    "init-db:dev": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
+    "init-db:dev": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Bernhard Winner",
