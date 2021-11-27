@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addBlog } from "../store/action";
-import { css } from "@emotion/react";
-import PropagateLoader from "react-spinners/PropagateLoader";
 import { Link } from "react-router-dom";
 
 function AddPage() {
 	let navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { isLoading, isError, isSuccess } = useSelector((state) => state);
-
-	const override = css`
-		display: block;
-		border-color: red;
-		margin-top: 20%;
-	`;
-
+	const { isLoading, isError } = useSelector((state) => state);
 	const [input, setInput] = useState({
 		title: "",
 		authorName: "",
@@ -27,19 +18,6 @@ function AddPage() {
 
 	const [imageUrl, setImageUrl] = useState({});
 	const [isErrorClient, setIsErrorClient] = useState(false);
-
-	useEffect(() => {
-		if (isError) {
-			console.log(isError);
-		}
-	}, [isError]);
-
-	useEffect(() => {
-		//handler routing
-		if (isSuccess) {
-			navigate("/");
-		}
-	}, [isSuccess]);
 
 	const handleaddBlog = () => {
 		if (input.title === "" || input.authorName === "" || input.content === "" || imageUrl === "") {
@@ -53,7 +31,7 @@ function AddPage() {
 		form.append("imageUrl", imageUrl);
 
 		dispatch(addBlog(form));
-		// navigate('/')
+		navigate('/')
 	};
 
 	const changeHandler = (e, key) => {
@@ -65,7 +43,7 @@ function AddPage() {
 		setImageUrl(e.target.files[0]);
 	};
 
-	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
+	if (isLoading) return <h1>Loading ... </h1>;
 	if (isError) return <h1>Error: {JSON.stringify(isError)}</h1>;
 	return (
 		<>

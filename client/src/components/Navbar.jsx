@@ -12,12 +12,12 @@ function Navbar() {
 					<div className="collapse navbar-collapse" id="navbarText">
 						<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 							<li className="nav-item">
-								<Link className="nav-link" to="/" smooth={true}>
+								<Link className="nav-link" to="/">
 									Home
 								</Link>
 							</li>
 							<li className="nav-item">
-								<Link className="nav-link" to="/addpage" smooth={true}>
+								<Link className="nav-link" to="/addpage">
 									Add Blog
 								</Link>
 							</li>

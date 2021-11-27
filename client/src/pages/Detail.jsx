@@ -3,33 +3,13 @@ import BackButton from "../components/BackButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogsById, deleteBlogHandler } from "../store/action";
-import { css } from "@emotion/react";
-import PropagateLoader from "react-spinners/PropagateLoader";
+
 
 function Detail() {
 	const { id } = useParams();
 	let navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { isLoading, isError, isSuccess, blogs, blog } = useSelector((state) => state);
-
-	const override = css`
-		display: block;
-		border-color: red;
-		margin-top: 20%;
-	`;
-
-	useEffect(() => {
-		if (isError) {
-			console.log(isError);
-		}
-	}, [isError]);
-
-	useEffect(() => {
-		//handler routing
-		if (isSuccess) {
-			navigate("/");
-		}
-	}, [isSuccess]);
+	const { isLoading, isError, blogs, blog } = useSelector((state) => state);
 
 	const handleEdit = (id) => {
 		navigate(`/edit/${id}`);
@@ -37,12 +17,13 @@ function Detail() {
 
 	const handleDelete = (id) => {
 		dispatch(deleteBlogHandler({blogs, id}));
+		navigate('/');
 	};
 	useEffect(() => {
 		dispatch(fetchBlogsById(id));
 	}, []);
 
-	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
+	if (isLoading) return <h1>Loading ... </h1>;
 	if (isError) return <h1>Error: {JSON.stringify(isError)}</h1>;
 
 	return (

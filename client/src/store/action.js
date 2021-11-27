@@ -1,4 +1,4 @@
-import { SET_ISLOADING, SET_ISERROR, SET_ISSUCCESS, SET_BLOGS, SET_BLOG, SET_COMMENTS } from "./actionTypes";
+import { SET_ISLOADING, SET_ISERROR, SET_BLOGS, SET_BLOG, SET_COMMENTS } from "./actionTypes";
 
 export function setIsLoading(payload) {
 	return {
@@ -9,12 +9,6 @@ export function setIsLoading(payload) {
 export function setIsError(payload) {
 	return {
 		type: SET_ISERROR,
-		payload: payload,
-	};
-}
-export function setIsSuccess(payload) {
-	return {
-		type: SET_ISSUCCESS,
 		payload: payload,
 	};
 }
@@ -45,7 +39,9 @@ export function fetchBlogs(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {
@@ -63,7 +59,6 @@ export function fetchBlogs(payload) {
 export function addBlog(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		dispatch(setIsSuccess(false));
 		fetch("https://cloudxier-bernhard.herokuapp.com/blogs", {
 			method: "POST",
 			body: payload,
@@ -72,20 +67,18 @@ export function addBlog(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {
-				// const { blogs } = getState()
-				// const newBlogs = [...blogs, data]
-				// dispatch(setBlogs(newBlogs))
-				dispatch(setIsSuccess(true))
+				dispatch(fetchBlogs());
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));
 			})
 			.finally(() => {
-				dispatch(setBlog({}));
 				dispatch(setIsLoading(false));
 			});
 	};
@@ -99,7 +92,9 @@ export function fetchBlogsById(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {
@@ -128,12 +123,13 @@ export function EditBlogHandler(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {
 				dispatch(setBlog(data));
-				
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));
@@ -148,7 +144,6 @@ export function EditBlogHandler(payload) {
 export function deleteBlogHandler(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		dispatch(setIsSuccess(false));
 		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
 			method: "DELETE",
 		})
@@ -156,13 +151,14 @@ export function deleteBlogHandler(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {
-				const newBlogs = payload.Blogs.filter((blog) => blog.id !== payload.id);
-				dispatch(setBlogs(newBlogs));
-				dispatch(setIsSuccess(true))
+				// const newBlogs = payload.Blogs.filter((blog) => blog.id !== payload.id);
+				dispatch(fetchBlogs());
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));
@@ -186,7 +182,9 @@ export function fetchComments(payload) {
 				if (resp.ok) {
 					return resp.json();
 				} else {
-					throw new Error("something is not correct");
+					return resp.json().then((msg) => {
+						throw new Error(msg.message);
+					});
 				}
 			})
 			.then((data) => {

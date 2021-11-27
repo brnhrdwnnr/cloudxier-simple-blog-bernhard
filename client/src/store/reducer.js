@@ -1,9 +1,8 @@
-import { SET_ISLOADING, SET_ISERROR, SET_ISSUCCESS, SET_BLOGS, SET_BLOG, SET_COMMENTS } from "./actionTypes";
+import { SET_ISLOADING, SET_ISERROR, SET_BLOGS, SET_BLOG, SET_COMMENTS } from "./actionTypes";
 
 const initialState = {
 	isLoading: false,
 	isError: null,
-	isSuccess: false,
 	blogs: [],
 	blog: {},
 	comments: [],
@@ -14,8 +13,6 @@ function reducer(state = initialState, action) {
 		return { ...state, isLoading: action.payload };
 	} else if (action.type === SET_ISERROR) {
 		return { ...state, isError: action.payload };
-	} else if (action.type === SET_ISSUCCESS) {
-		return { ...state, isSuccess: action.payload };
 	} else if (action.type === SET_BLOGS) {
 		return { ...state, blogs: action.payload };
 	} else if (action.type === SET_BLOG) {

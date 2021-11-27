@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../components/Navbar";
 import { fetchBlogs } from "../store/action";
 import BlogCard from "../components/BlogCard";
-import { css } from "@emotion/react";
-import PropagateLoader from "react-spinners/PropagateLoader";
-import { useNavigate } from "react-router-dom";
 
 function Home() {
-	let navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { isLoading, isError } = useSelector((state) => state);
 	const { blogs } = useSelector((state) => state);
-
-	const override = css`
-	display: block;
-	border-color: red;
-	margin-top: 20%;
-`;
 
 	useEffect(() => {
 		dispatch(fetchBlogs());
 	}, [dispatch]);
 
-	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
+	if (isLoading) return <h1>Loading ... </h1>;
 	if (isError) return <h1>Error: {JSON.stringify(isError)}</h1>;
 
 	return (
