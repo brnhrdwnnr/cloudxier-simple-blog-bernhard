@@ -7,7 +7,7 @@
 3. Jika ingin init database development lakukan command `npm run init-db:dev`
 
 
-> Link Client : 
+> Link Client : https://cloudxier-bernhard.web.app/
 
 > Link Server : https://cloudxier-bernhard.herokuapp.com/
 
