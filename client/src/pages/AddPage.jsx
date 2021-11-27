@@ -82,19 +82,21 @@ function AddPage() {
 									/>
 								</div>
 								<div className="form-group">
-									<label className="form-label">Image URL</label>
-									<input type="file" accept="image/*" onChange={changeInputImage} />
-								</div>
-								<div className="form-group">
 									<img src={image} className="img-fluid image-edit" alt="" />
 								</div>
 								<div className="form-group">
-									<Link to="/" smooth={true}>
-										<button className="btn btn-primary">Cancel</button>
-									</Link>
-									<button type="submit" className="btn btn-primary" onClick={handleaddBlog}>
-										Submit
-									</button>
+									<input type="file" accept="image/*" onChange={changeInputImage} />
+								</div>
+						
+								<div>
+									<div className="d-flex justify-content-between">
+										<Link to="/">
+											<button className="btn btn-primary">Cancel</button>
+										</Link>
+										<button type="submit" className="btn btn-primary" onClick={handleaddBlog}>
+											Submit
+										</button>
+									</div>
 								</div>
 							</form>
 						</div>

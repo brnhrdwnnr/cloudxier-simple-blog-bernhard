@@ -147,11 +147,12 @@ input {
 }
 .image-edit {
 	float: left;
+	width : 100%;
 	/* width: 50%;
 	height: 50% */
 }
 .image-card {
-	max-width: 100%;
+	width: 100%;
 	height: 360px;
 }
 
@@ -277,6 +278,7 @@ input {
 }
 .detail-section .text-sec {
 	padding-left: 2rem;
+	
 }
 
 /*

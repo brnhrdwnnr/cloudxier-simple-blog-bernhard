@@ -13,6 +13,7 @@ function UpdatePage() {
 	const { isLoading, isError, blog } = useSelector((state) => state);
 	const [showResults, setShowResults] = useState(true);
 
+	const [image, setImage] = useState(null);
 	const [input, setInput] = useState({
 		title: "",
 		authorName: "",
@@ -56,6 +57,9 @@ function UpdatePage() {
 	};
 
 	const changeInputImage = (e) => {
+		if (e.target.files && e.target.files[0]) {
+			setImage(URL.createObjectURL(e.target.files[0]));
+		}
 		setShowResults(false);
 		setImageUrl(e.target.files[0]);
 	};
@@ -108,6 +112,9 @@ function UpdatePage() {
 									/>
 								</div>
 								{ showResults ? <Results /> : null }
+								<div className="form-group">
+									<img src={image} className="img-fluid image-edit" alt="" />
+								</div>
 								<div className="form-group">
 									<input type="file" accept="image/*" onChange={changeInputImage} />
 								</div>
