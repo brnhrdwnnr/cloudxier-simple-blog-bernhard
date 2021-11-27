@@ -34,7 +34,7 @@ export function setComments(payload) {
 export function fetchBlogs(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/blogs")
+		fetch("https://cloudxier-bernhard.herokuapp.com/blogs")
 			.then((resp) => {
 				if (resp.ok) {
 					return resp.json();
@@ -59,7 +59,7 @@ export function fetchBlogs(payload) {
 export function addBlog(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/blogs", {
+		fetch("https://cloudxier-bernhard.herokuapp.com/blogs", {
 			method: "POST",
 			body: payload,
 		})
@@ -90,7 +90,7 @@ export function addBlog(payload) {
 export function fetchBlogsById(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/blogs/" + payload)
+		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload)
 			.then((resp) => {
 				if (resp.ok) {
 					return resp.json();
@@ -115,7 +115,7 @@ export function fetchBlogsById(payload) {
 export function EditBlogHandler(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/blogs/" + payload.id, {
+		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
 			method: "PUT",
 			body: payload.form,
 		})
@@ -143,7 +143,7 @@ export function EditBlogHandler(payload) {
 export function deleteBlogHandler(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/blogs/" + payload.id, {
+		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
 			method: "DELETE",
 		})
 			.then((resp) => {
@@ -171,7 +171,7 @@ export function deleteBlogHandler(payload) {
 export function fetchComments(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("http://localhost:3000/comments", {
+		fetch("https://cloudxier-bernhard.herokuapp.com/comments", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
