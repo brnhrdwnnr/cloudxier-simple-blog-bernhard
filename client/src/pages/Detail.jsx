@@ -30,7 +30,7 @@ function Detail() {
 	return (
 		<>
 			<BackButton />
-			<section id="detail">
+			<section id="detail">	
 				<div className="detail-section wrapper">
 					<br />
 					<h5> Blog Posts > Featured Home</h5>

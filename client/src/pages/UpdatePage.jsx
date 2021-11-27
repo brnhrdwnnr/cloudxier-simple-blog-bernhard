@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setBlog, fetchBlogsById, EditBlogHandler } from "../store/action";
+import { fetchBlogsById, EditBlogHandler } from "../store/action";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -11,6 +11,7 @@ function UpdatePage() {
 	let navigate = useNavigate();
 	const { id } = useParams();
 	const { isLoading, isError, blog } = useSelector((state) => state);
+	const [showResults, setShowResults] = useState(true);
 
 	const [input, setInput] = useState({
 		title: "",
@@ -29,13 +30,12 @@ function UpdatePage() {
 	};
 
 	useEffect(() => {
-		blogGetter()
+		blogGetter();
 	}, [dispatch]);
 
 	const [isErrorClient, setIsErrorClient] = useState(false);
 
 	const [imageUrl, setImageUrl] = useState({});
-
 
 	const handleEditBlog = (e) => {
 		e.preventDefault();
@@ -51,12 +51,20 @@ function UpdatePage() {
 		form.append("content", input.content);
 		form.append("imageUrl", imageUrl);
 		dispatch(EditBlogHandler(form));
+		console.log(form, "FORM");
 		navigate("/");
 	};
 
 	const changeInputImage = (e) => {
+		setShowResults(false);
 		setImageUrl(e.target.files[0]);
 	};
+
+	const Results = () => (
+		<div>
+			<img src={input.imageUrl} className="img-fluid image-edit" alt="" />
+		</div>
+	);
 
 	const changeHandler = (e, key) => {
 		const newInput = { ...input };
@@ -78,21 +86,20 @@ function UpdatePage() {
 							<div>
 								<h3 className="text-center mb-3">Edit blog post</h3>
 							</div>
-							<form onSubmit={handleEditBlog} className="user">
+							<form className="user">
 								<div className="form-group">
 									<label className="form-label text-start">Insert Title</label>
-									<input name="title" value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
+									<input value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Author Name</label>
-									<input name="name" value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
+									<input value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Insert Blog Contents</label>
 
 									<textarea
 										style={{ maxWidth: "100%", minHeight: "150px", height: "100%", width: "100%" }}
-										name="content"
 										value={input.content}
 										onChange={(e) => changeHandler(e, "content")}
 										type="text"
@@ -100,18 +107,15 @@ function UpdatePage() {
 										placeholder="Put description of your article"
 									/>
 								</div>
-								<div className="form-group">
-									<img src={input.imageUrl} className="img-fluid image-edit" alt="" />
-								</div>
-								<br />
+								{ showResults ? <Results /> : null }
 								<div className="form-group">
 									<input type="file" accept="image/*" onChange={changeInputImage} />
 								</div>
 								<div className="d-flex justify-content-between">
-									<Link to="/" smooth={true}>
+									<Link to="/">
 										<button className="btn btn-primary">Cancel</button>
 									</Link>
-									<button type="submit" className="btn btn-primary">
+									<button onClick={handleEditBlog} type="submit" className="btn btn-primary">
 										Submit
 									</button>
 								</div>

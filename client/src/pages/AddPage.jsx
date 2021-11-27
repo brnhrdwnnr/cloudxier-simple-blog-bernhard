@@ -16,7 +16,7 @@ function AddPage() {
 		authorName: "",
 		content: "",
 	});
-
+	const [image, setImage] = useState(null);
 	const [imageUrl, setImageUrl] = useState({});
 	const [isErrorClient, setIsErrorClient] = useState(false);
 
@@ -32,7 +32,7 @@ function AddPage() {
 		form.append("imageUrl", imageUrl);
 
 		dispatch(addBlog(form));
-		navigate('/')
+		navigate("/");
 	};
 
 	const changeHandler = (e, key) => {
@@ -41,6 +41,9 @@ function AddPage() {
 		setInput(newInput);
 	};
 	const changeInputImage = (e) => {
+		if (e.target.files && e.target.files[0]) {
+			setImage(URL.createObjectURL(e.target.files[0]));
+		}
 		setImageUrl(e.target.files[0]);
 	};
 
@@ -81,8 +84,11 @@ function AddPage() {
 								<div className="form-group">
 									<label className="form-label">Image URL</label>
 									<input type="file" accept="image/*" onChange={changeInputImage} />
-								</div> 
-								<div className="d-flex justify-content-between">
+								</div>
+								<div className="form-group">
+									<img src={image} className="img-fluid image-edit" alt="" />
+								</div>
+								<div className="form-group">
 									<Link to="/" smooth={true}>
 										<button className="btn btn-primary">Cancel</button>
 									</Link>

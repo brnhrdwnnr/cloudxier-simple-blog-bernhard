@@ -147,8 +147,8 @@ input {
 }
 .image-edit {
 	float: left;
-	width: 50%;
-	height: 50%
+	/* width: 50%;
+	height: 50% */
 }
 .image-card {
 	max-width: 100%;

@@ -110,6 +110,7 @@ export function fetchBlogsById(payload) {
 }
 
 export function EditBlogHandler(payload) {
+	console.log(payload, "PAYLOAD")
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
 		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
@@ -132,7 +133,6 @@ export function EditBlogHandler(payload) {
 				dispatch(setIsError(err.message));
 			})
 			.finally(() => {
-				dispatch(setBlog({}));
 				dispatch(setIsLoading(false));
 			});
 	};
