@@ -34,7 +34,7 @@ export function setComments(payload) {
 export function fetchBlogs(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/blogs")
+		fetch("http://localhost:3000/blogs")
 			.then((resp) => {
 				if (resp.ok) {
 					return resp.json();
@@ -59,7 +59,7 @@ export function fetchBlogs(payload) {
 export function addBlog(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/blogs", {
+		fetch("http://localhost:3000/blogs", {
 			method: "POST",
 			body: payload,
 		})
@@ -73,7 +73,10 @@ export function addBlog(payload) {
 				}
 			})
 			.then((data) => {
-				dispatch(fetchBlogs());
+				const { blogs } = getState()
+				const newBlogs = [...blogs, data]
+				dispatch(setBlogs(newBlogs))
+				// dispatch(fetchBlogs());
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));
@@ -87,7 +90,7 @@ export function addBlog(payload) {
 export function fetchBlogsById(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload)
+		fetch("http://localhost:3000/blogs/" + payload)
 			.then((resp) => {
 				if (resp.ok) {
 					return resp.json();
@@ -110,12 +113,11 @@ export function fetchBlogsById(payload) {
 }
 
 export function EditBlogHandler(payload) {
-	console.log(payload, "PAYLOAD")
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
+		fetch("http://localhost:3000/blogs/" + payload.id, {
 			method: "PUT",
-			body: payload,
+			body: payload.form,
 		})
 			.then((resp) => {
 				if (resp.ok) {
@@ -141,7 +143,7 @@ export function EditBlogHandler(payload) {
 export function deleteBlogHandler(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
+		fetch("http://localhost:3000/blogs/" + payload.id, {
 			method: "DELETE",
 		})
 			.then((resp) => {
@@ -154,8 +156,8 @@ export function deleteBlogHandler(payload) {
 				}
 			})
 			.then((data) => {
-				// const newBlogs = payload.Blogs.filter((blog) => blog.id !== payload.id);
-				dispatch(fetchBlogs());
+				const newBlogs = payload.blogs.filter((blog) => blog.id !== payload.id);
+				dispatch(setBlogs(newBlogs))
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));
@@ -169,7 +171,7 @@ export function deleteBlogHandler(payload) {
 export function fetchComments(payload) {
 	return (dispatch, getState) => {
 		dispatch(setIsLoading(true));
-		fetch("https://cloudxier-bernhard.herokuapp.com/comments", {
+		fetch("http://localhost:3000/comments", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

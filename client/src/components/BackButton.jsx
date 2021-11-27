@@ -7,7 +7,9 @@ function BackButton() {
 			<nav className="navbar navbar-expand-lg navigation-wrap">
 				<div className="container">
 					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-						<i class="fas fa-arrow-left fa-lg"></i>
+						<Link className="nav-link" to="/">
+							<i class="fas fa-arrow-left fa-lg"></i>
+						</Link>
 					</button>
 				</div>
 				<div className="collapse navbar-collapse" id="navbarText">

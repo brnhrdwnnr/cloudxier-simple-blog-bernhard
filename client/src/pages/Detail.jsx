@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogsById, deleteBlogHandler } from "../store/action";
 import Swal from "sweetalert2";
 
+
 function Detail() {
 	const { id } = useParams();
 	let navigate = useNavigate();
@@ -33,15 +34,15 @@ function Detail() {
 			<section id="all-blogs">
 				<div className="all-blogs wrapper">
 					<br />
-					<h5> Blog Posts > Featured Home</h5>
+					<h5> Blog Posts - Featured Home</h5>
 					<div className="container">
 						<div className="row align-items-between">
-							<div className="col-sm-8">
+							<div className="col-sm-7">
 								<div className="card border-0">
 									<img src={blog.imageUrl} alt="" />
 								</div>
 							</div>
-							<div className="col-lg-4 col-md-12 text-sec align-items-between">
+							<div className="col-lg-5 col-md-12 text-sec align-items-between">
 								<div className="d-flex justify-content-between">
 									<h2>{blog.title}</h2>
 									<i className="far fa-heart love fa-2x"></i>

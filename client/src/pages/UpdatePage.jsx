@@ -46,13 +46,12 @@ function UpdatePage() {
 		}
 
 		const form = new FormData();
-		form.append("id", id);
 		form.append("title", input.title);
 		form.append("authorName", input.authorName);
 		form.append("content", input.content);
-		form.append("imageUrl", imageUrl);
-		dispatch(EditBlogHandler(form));
-		console.log(form, "FORM");
+		form.append("imageUrl", imageUrl)
+	
+		dispatch(EditBlogHandler({form, id}));
 		navigate("/");
 	};
 
@@ -88,16 +87,16 @@ function UpdatePage() {
 						<div class="card-body justify-content-start">
 							{isErrorClient && <p>all field must be filled</p>}
 							<div>
-								<h3 className="text-center mb-3">Edit blog post</h3>
+								<h3 className="text-center">Edit blog post</h3>
 							</div>
-							<form className="user">
+							<form>
 								<div className="form-group">
 									<label className="form-label text-start">Insert Title</label>
-									<input value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
+									<input value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Author Name</label>
-									<input value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
+									<input value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Insert Blog Contents</label>
@@ -108,7 +107,7 @@ function UpdatePage() {
 										onChange={(e) => changeHandler(e, "content")}
 										type="text"
 										className="form-control border-1 rounded text-justify"
-										placeholder="Put description of your article"
+										
 									/>
 								</div>
 								{ showResults ? <Results /> : null }

@@ -30,7 +30,7 @@ function AddPage() {
 		form.append("authorName", input.authorName);
 		form.append("content", input.content);
 		form.append("imageUrl", imageUrl);
-
+		
 		dispatch(addBlog(form));
 		navigate("/");
 	};
