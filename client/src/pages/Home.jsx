@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../components/Navbar";
 import { fetchBlogs } from "../store/action";
 import BlogCard from "../components/BlogCard";
+import Swal from "sweetalert2";
 
 function Home() {
 	const dispatch = useDispatch();

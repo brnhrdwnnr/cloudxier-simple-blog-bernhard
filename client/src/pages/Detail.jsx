@@ -3,6 +3,7 @@ import BackButton from "../components/BackButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogsById, deleteBlogHandler } from "../store/action";
+import Swal from "sweetalert2";
 
 
 function Detail() {

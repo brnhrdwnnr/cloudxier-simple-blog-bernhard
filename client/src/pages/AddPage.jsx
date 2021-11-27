@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addBlog } from "../store/action";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function AddPage() {
 	let navigate = useNavigate();
@@ -79,9 +80,7 @@ function AddPage() {
 								</div>
 								<div className="form-group">
 									<label className="form-label">Image URL</label>
-									{/* <span>{imageUrl.name ? imageUrl.name : <h1>Select a file</h1>}</span> */}
-									<input type="file" accept="image/*" className="hidden" onChange={changeInputImage} />
-									{/* <input name="imageUrl" value={input.imageUrl} onChange={changeaddBlogHandler} type="file" accept="image/*" className="form-control border-1 rounded" placeholder="Insert Image URL" /> */}
+									<input type="file" accept="image/*" onChange={changeInputImage} />
 								</div> 
 								<div className="d-flex justify-content-between">
 									<Link to="/" smooth={true}>

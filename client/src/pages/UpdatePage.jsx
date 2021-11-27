@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setBlog, fetchBlogsById, EditBlogHandler } from "../store/action";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function UpdatePage() {
 	const dispatch = useDispatch();
@@ -26,29 +27,30 @@ function UpdatePage() {
 
 	const handleEditBlog = (e) => {
 		e.preventDefault();
+
+		if (input.title === "" || input.authorName === "" || input.content === "" || imageUrl === "") {
+			return setIsErrorClient(true);
+		}
+
 		const form = new FormData();
 		form.append("id", id);
 		form.append("title", input.title);
 		form.append("authorName", input.authorName);
 		form.append("content", input.content);
 		form.append("imageUrl", imageUrl);
-		dispatch(EditBlogHandler(blog));
+		dispatch(EditBlogHandler(form));
 		navigate("/");
 	};
 
 	const changeInputImage = (e) => {
 		setImageUrl(e.target.files[0]);
-	  };
+	};
 
-	const changeEditBlogHandler = (e) => {
-		const value = e.target.value;
-		const name = e.target.name;
-		dispatch(
-			setBlog({
-				...blog,
-				[name]: value,
-			})
-		);
+	const changeHandler = (e, key) => {
+		const newInput = { ...input };
+		newInput[key] = e.target.value;
+		// setInput(newInput);
+		dispatch(setBlog(newInput));
 	};
 
 	if (isLoading) return <h1>Loading ... </h1>;
@@ -68,11 +70,11 @@ function UpdatePage() {
 							<form onSubmit={handleEditBlog} className="user">
 								<div className="form-group">
 									<label className="form-label text-start">Insert Title</label>
-									<input name="title" value={blog.title} onChange={changeEditBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
+									<input name="title" value={blog.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Author Name</label>
-									<input name="name" value={blog.authorName} onChange={changeEditBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
+									<input name="name" value={blog.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Insert Blog Contents</label>
@@ -81,15 +83,19 @@ function UpdatePage() {
 										style={{ maxWidth: "100%", minHeight: "150px", height: "100%", width: "100%" }}
 										name="content"
 										value={blog.content}
-										onChange={changeEditBlogHandler}
+										onChange={(e) => changeHandler(e, "content")}
 										type="text"
 										className="form-control border-1 rounded text-justify"
 										placeholder="Put description of your article"
 									/>
 								</div>
 								<div className="form-group">
-									<label className="form-label">Image URL</label>
-									<input name="name" value={blog.imageUrl} onChange={changeEditBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert Image URL" />
+									<img src={blog.imageUrl} className="img-fluid image-edit" alt="" />
+								</div>
+								<br/>
+								<div className="form-group">
+									{/* <label className="form-label">Image URL</label> */}
+									<input type="file" accept="image/*" onChange={changeInputImage} />
 								</div>
 								<div className="d-flex justify-content-between">
 									<Link to="/" smooth={true}>
