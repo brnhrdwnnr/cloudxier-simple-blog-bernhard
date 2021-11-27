@@ -33,7 +33,7 @@ function BlogCard(props) {
 							<i styles={{ size: "17px" }} className="fas fa-ellipsis-v"></i>
 						</div>
 						<div className="d-flex justify-content-between">
-							<p>{props.data?.Comments.length} comments</p>
+							<p>{props.data.Comments?.length} comments</p>
 							<p>By {props.data.authorName}</p>
 						</div>
 					</div>

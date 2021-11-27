@@ -26,7 +26,6 @@ function AddPage() {
 	});
 
 	const [imageUrl, setImageUrl] = useState({});
-
 	const [isErrorClient, setIsErrorClient] = useState(false);
 
 	useEffect(() => {
@@ -53,9 +52,8 @@ function AddPage() {
 		form.append("content", input.content);
 		form.append("imageUrl", imageUrl);
 
-		dispatch(addBlog(form, "FORM"));
-		console.log(form)
-		navigate('/')
+		dispatch(addBlog(form));
+		// navigate('/')
 	};
 
 	const changeHandler = (e, key) => {
@@ -68,7 +66,7 @@ function AddPage() {
 	};
 
 	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
-	if (isError) return <h1>Error: {isError.message}</h1>;
+	if (isError) return <h1>Error: {JSON.stringify(isError)}</h1>;
 	return (
 		<>
 			<Navbar />
@@ -106,7 +104,7 @@ function AddPage() {
 									{/* <span>{imageUrl.name ? imageUrl.name : <h1>Select a file</h1>}</span> */}
 									<input type="file" accept="image/*" className="hidden" onChange={changeInputImage} />
 									{/* <input name="imageUrl" value={input.imageUrl} onChange={changeaddBlogHandler} type="file" accept="image/*" className="form-control border-1 rounded" placeholder="Insert Image URL" /> */}
-								</div>
+								</div> 
 								<div className="d-flex justify-content-between">
 									<Link to="/" smooth={true}>
 										<button className="btn btn-primary">Cancel</button>

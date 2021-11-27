@@ -73,7 +73,7 @@ function UpdatePage() {
 	};
 
 	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
-	if (isError) return <h1>Error: {isError.message}</h1>;
+	if (isError) return <h1>Error: {JSON.stringify(isError)}</h1>;
 	return (
 		<>
 			<Navbar />
