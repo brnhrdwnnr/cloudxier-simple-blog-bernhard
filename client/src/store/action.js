@@ -114,10 +114,7 @@ export function EditBlogHandler(payload) {
 		dispatch(setIsLoading(true));
 		fetch("https://cloudxier-bernhard.herokuapp.com/blogs/" + payload.id, {
 			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(payload),
+			body: payload,
 		})
 			.then((resp) => {
 				if (resp.ok) {
@@ -129,7 +126,7 @@ export function EditBlogHandler(payload) {
 				}
 			})
 			.then((data) => {
-				dispatch(setBlog(data));
+				dispatch(fetchBlogs());
 			})
 			.catch((err) => {
 				dispatch(setIsError(err.message));

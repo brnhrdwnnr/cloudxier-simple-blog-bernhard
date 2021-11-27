@@ -17,13 +17,25 @@ function UpdatePage() {
 		authorName: "",
 		content: "",
 	});
+
+	const blogGetter = () => {
+		dispatch(fetchBlogsById(id));
+		setInput({
+			title: blog.title,
+			authorName: blog.authorName,
+			content: blog.content,
+			imageUrl: blog.imageUrl,
+		});
+	};
+
+	useEffect(() => {
+		blogGetter()
+	}, [dispatch]);
+
 	const [isErrorClient, setIsErrorClient] = useState(false);
 
 	const [imageUrl, setImageUrl] = useState({});
 
-	useEffect(() => {
-		dispatch(fetchBlogsById(id));
-	}, []);
 
 	const handleEditBlog = (e) => {
 		e.preventDefault();
@@ -49,8 +61,7 @@ function UpdatePage() {
 	const changeHandler = (e, key) => {
 		const newInput = { ...input };
 		newInput[key] = e.target.value;
-		// setInput(newInput);
-		dispatch(setBlog(newInput));
+		setInput(newInput);
 	};
 
 	if (isLoading) return <h1>Loading ... </h1>;
@@ -70,11 +81,11 @@ function UpdatePage() {
 							<form onSubmit={handleEditBlog} className="user">
 								<div className="form-group">
 									<label className="form-label text-start">Insert Title</label>
-									<input name="title" value={blog.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
+									<input name="title" value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Author Name</label>
-									<input name="name" value={blog.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
+									<input name="name" value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Insert Blog Contents</label>
@@ -82,7 +93,7 @@ function UpdatePage() {
 									<textarea
 										style={{ maxWidth: "100%", minHeight: "150px", height: "100%", width: "100%" }}
 										name="content"
-										value={blog.content}
+										value={input.content}
 										onChange={(e) => changeHandler(e, "content")}
 										type="text"
 										className="form-control border-1 rounded text-justify"
@@ -90,11 +101,10 @@ function UpdatePage() {
 									/>
 								</div>
 								<div className="form-group">
-									<img src={blog.imageUrl} className="img-fluid image-edit" alt="" />
+									<img src={input.imageUrl} className="img-fluid image-edit" alt="" />
 								</div>
-								<br/>
+								<br />
 								<div className="form-group">
-									{/* <label className="form-label">Image URL</label> */}
 									<input type="file" accept="image/*" onChange={changeInputImage} />
 								</div>
 								<div className="d-flex justify-content-between">
