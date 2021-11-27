@@ -66,15 +66,13 @@ export function fetchBlogs(payload) {
 }
 
 export function addBlog(payload) {
+	console.log(payload, "PAYLOAD")
 	return (dispatch, getState) => {
 		dispatch(setLoading(true));
 		dispatch(setIsSuccess(false))
 		fetch("https://cloudxier-bernhard.herokuapp.com/blogs", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(payload),
+			body: payload
 		})
 			.then((resp) => {
 				if (resp.ok) {

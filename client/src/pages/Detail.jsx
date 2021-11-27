@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBlogsById } from "../store/action";
+import { fetchBlogsById, deleteBlogHandler } from "../store/action";
 
 function Detail() {
 	const { id } = useParams();
 	let navigate = useNavigate();
 
 	const dispatch = useDispatch();
-	const { blog } = useSelector((state) => state);
+	const { blogs, blog } = useSelector((state) => state);
 
 	const handleEdit = (id) => {
 		navigate(`/edit/${id}`);
 	};
 
 	const handleDelete = (id) => {
-		navigate(`/detail/${id}`);
+		dispatch(deleteBlogHandler({blogs, id}));
 	};
 	useEffect(() => {
 		dispatch(fetchBlogsById(id));

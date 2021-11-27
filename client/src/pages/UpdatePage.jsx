@@ -18,13 +18,14 @@ function UpdatePage() {
 		margin-top: 20%;
 	`;
 
-	// const [input, setInput] = useState({
-	// 	title: "",
-	// 	authorName: "",
-	// 	content: "",
-	// 	imageUrl: "",
-	// });
+	const [input, setInput] = useState({
+		title: "",
+		authorName: "",
+		content: "",
+	});
 	const [isErrorClient, setIsErrorClient] = useState(false); //handler client error
+
+	const [imageUrl, setImageUrl] = useState({});
 
 	useEffect(() => {
 		dispatch(fetchBlogsById(id));
@@ -46,9 +47,19 @@ function UpdatePage() {
 
 	const handleEditBlog = (e) => {
 		e.preventDefault();
+		const form = new FormData();
+		form.append("id", id);
+		form.append("title", input.title);
+		form.append("authorName", input.authorName);
+		form.append("content", input.content);
+		form.append("imageUrl", imageUrl);
 		dispatch(EditBlogHandler(blog));
 		navigate("/");
 	};
+
+	const changeInputImage = (e) => {
+		setImageUrl(e.target.files[0]);
+	  };
 
 	const changeEditBlogHandler = (e) => {
 		const value = e.target.value;
@@ -102,7 +113,9 @@ function UpdatePage() {
 									<input name="name" value={blog.imageUrl} onChange={changeEditBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert Image URL" />
 								</div>
 								<div className="d-flex justify-content-between">
-									<button className="btn btn-primary">Cancel</button>
+									<Link to="/" smooth={true}>
+										<button className="btn btn-primary">Cancel</button>
+									</Link>
 									<button type="submit" className="btn btn-primary">
 										Submit
 									</button>

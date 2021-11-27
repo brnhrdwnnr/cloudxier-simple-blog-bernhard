@@ -23,8 +23,10 @@ function AddPage() {
 		title: "",
 		authorName: "",
 		content: "",
-		imageUrl: "",
 	});
+
+	const [imageUrl, setImageUrl] = useState({});
+
 	const [isErrorClient, setIsErrorClient] = useState(false);
 
 	useEffect(() => {
@@ -40,21 +42,29 @@ function AddPage() {
 		}
 	}, [isSuccess]);
 
-	const handleaddBlog = (e) => {
-		e.preventDefault();
-
-		if (input.title === "" || input.authorName === "" || input.content === "" || input.imageUrl === "") {
+	const handleaddBlog = () => {
+		if (input.title === "" || input.authorName === "" || input.content === "" || imageUrl === "") {
 			return setIsErrorClient(true);
 		}
-		dispatch(addBlog(input));
+
+		const form = new FormData();
+		form.append("title", input.title);
+		form.append("authorName", input.authorName);
+		form.append("content", input.content);
+		form.append("imageUrl", imageUrl);
+
+		dispatch(addBlog(form, "FORM"));
+		console.log(form)
+		navigate('/')
 	};
 
-	const changeaddBlogHandler = (e) => {
-		const { name, value } = e.target;
-		setInput({
-			...input,
-			[name]: value,
-		});
+	const changeHandler = (e, key) => {
+		const newInput = { ...input };
+		newInput[key] = e.target.value;
+		setInput(newInput);
+	};
+	const changeInputImage = (e) => {
+		setImageUrl(e.target.files[0]);
 	};
 
 	if (isLoading) return <PropagateLoader css={override} size={40} color={"#3d2514"} />;
@@ -70,23 +80,22 @@ function AddPage() {
 							<div>
 								<h3 className="text-center mb-3">Create new blog post</h3>
 							</div>
-							<form onSubmit={handleaddBlog}>
+							<form>
 								<div className="form-group">
 									<label className="form-label text-start">Insert Title</label>
-									<input name="title" value={input.title} onChange={changeaddBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
+									<input value={input.title} onChange={(e) => changeHandler(e, "title")} type="text" className="form-control border-1 rounded" placeholder="Insert your blog title" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Author Name</label>
-									<input name="authorName" value={input.authorName} onChange={changeaddBlogHandler} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
+									<input value={input.authorName} onChange={(e) => changeHandler(e, "authorName")} type="text" className="form-control border-1 rounded" placeholder="Insert author name" />
 								</div>
 								<div className="form-group">
 									<label className="form-label">Insert Blog Contents</label>
 
 									<textarea
 										style={{ maxWidth: "100%", minHeight: "150px", height: "100%", width: "100%" }}
-										name="content"
 										value={input.content}
-										onChange={changeaddBlogHandler}
+										onChange={(e) => changeHandler(e, "content")}
 										type="text"
 										className="form-control border-1 rounded text-justify"
 										placeholder="Put description of your article"
@@ -94,13 +103,15 @@ function AddPage() {
 								</div>
 								<div className="form-group">
 									<label className="form-label">Image URL</label>
-									<input name="imageUrl" value={input.imageUrl} onChange={changeaddBlogHandler} type="file" accept="image/*" className="form-control border-1 rounded" placeholder="Insert Image URL" />
+									{/* <span>{imageUrl.name ? imageUrl.name : <h1>Select a file</h1>}</span> */}
+									<input type="file" accept="image/*" className="hidden" onChange={changeInputImage} />
+									{/* <input name="imageUrl" value={input.imageUrl} onChange={changeaddBlogHandler} type="file" accept="image/*" className="form-control border-1 rounded" placeholder="Insert Image URL" /> */}
 								</div>
 								<div className="d-flex justify-content-between">
 									<Link to="/" smooth={true}>
 										<button className="btn btn-primary">Cancel</button>
 									</Link>
-									<button type="submit" className="btn btn-primary">
+									<button type="submit" className="btn btn-primary" onClick={handleaddBlog}>
 										Submit
 									</button>
 								</div>
